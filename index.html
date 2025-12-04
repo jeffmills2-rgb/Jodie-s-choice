@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Good or Poor Choice</title>
+
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -16,42 +17,69 @@
 
     .container {
       display: flex;
-      gap: 80px;
+      flex-direction: column;
+      gap: 60px;
+      align-items: center;
     }
 
-    button {
-      font-size: 1.5rem;
-      padding: 30px 60px;
-      border-radius: 20px;
-      border: 4px solid transparent;
+    .choice-btn {
+      border: none;
+      padding: 0;
+      background: none;
       cursor: pointer;
-      font-weight: 600;
     }
 
-    #goodChoiceBtn {
-      border-color: #29a329;
-      color: #29a329;
-      background: #eaffea;
+    /* Default image styling */
+    .choice-btn img {
+      width: 200px;
+      height: auto;
+      border-radius: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      transition: all 0.25s ease;
     }
 
-    #poorChoiceBtn {
-      border-color: #e53935;
-      color: #e53935;
-      background: #ffecec;
+    /* GOOD CHOICE — GREEN BORDER & GLOW */
+    #goodChoiceBtn img {
+      border: 6px solid #2ecc71;  /* Green border */
     }
 
-    button:active {
+    #goodChoiceBtn img:hover {
+      box-shadow: 0 0 30px rgba(46, 204, 113, 0.8),
+                  0 8px 25px rgba(0, 0, 0, 0.3);
+      transform: translateY(-5px);
+    }
+
+    /* POOR CHOICE — RED BORDER & GLOW */
+    #poorChoiceBtn img {
+      border: 6px solid #e74c3c;  /* Red border */
+    }
+
+    #poorChoiceBtn img:hover {
+      box-shadow: 0 0 30px rgba(231, 76, 60, 0.8),
+                  0 8px 25px rgba(0, 0, 0, 0.3);
+      transform: translateY(-5px);
+    }
+
+    /* Pressed effect for both */
+    .choice-btn:active img {
       transform: scale(0.97);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <button id="goodChoiceBtn">Good Choice</button>
-    <button id="poorChoiceBtn">Poor Choice</button>
+    <button class="choice-btn" id="goodChoiceBtn">
+      <img src="positive.png" alt="Good Choice" />
+    </button>
+
+    <button class="choice-btn" id="poorChoiceBtn">
+      <img src="negative.png" alt="Poor Choice" />
+    </button>
   </div>
 
-  <!-- Preload audio files -->
+  <!-- AUDIO FILES -->
   <audio id="positiveSound" src="Positive.mp3"></audio>
   <audio id="negativeSound" src="Negative.mp3"></audio>
 
@@ -60,22 +88,18 @@
     const negativeSound = document.getElementById("negativeSound");
 
     document.getElementById("goodChoiceBtn").addEventListener("click", () => {
-      // Stop and reset the other sound
       negativeSound.pause();
       negativeSound.currentTime = 0;
 
-      // Play positive sound from the start
       positiveSound.pause();
       positiveSound.currentTime = 0;
       positiveSound.play();
     });
 
     document.getElementById("poorChoiceBtn").addEventListener("click", () => {
-      // Stop and reset the other sound
       positiveSound.pause();
       positiveSound.currentTime = 0;
 
-      // Play negative sound from the start
       negativeSound.pause();
       negativeSound.currentTime = 0;
       negativeSound.play();
